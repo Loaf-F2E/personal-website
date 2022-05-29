@@ -13,8 +13,8 @@ export class JwtStrateagy extends PassportStrategy(Strategy) {
       // fromBodyField: 在请求的Body字段中查找JWT
       // fromAuthHeaderAsBearerToken：在授权标头带有Bearer方案中查找JWT
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: configService.get('JWT_SECRET'),
-      // secretOrKey: `${process.env.JWT_SECRET}`,
+      // secretOrKey: configService.get('JWT_SECRET'),
+      secretOrKey: `${process.env.JWT_SECRET}`,
       // secretOrKey: 'test',
     } as StrategyOptions);
   }

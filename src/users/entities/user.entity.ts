@@ -1,6 +1,9 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
 import { roleType, userState } from 'src/constants/user';
+
+/**
+ * 用户表
+ */
 
 @Entity()
 export class User {
@@ -18,7 +21,7 @@ export class User {
 
   @Column({
     default: roleType.User,
-    comment: '用户角色：0-管理员|1-普通用户',
+    comment: '用户角色：0-管理员|1-普通用户|2-游客',
   })
   role: number;
 
