@@ -29,7 +29,7 @@ async function bootstrap() {
 
   // localhost:port/api 查看swagger生成的接口文档
   SwaggerModule.setup('api', app, document);
-  await app.listen(3000);
+  await app.listen(8082);
 }
 //  test
 bootstrap();
