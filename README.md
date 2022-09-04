@@ -14,6 +14,20 @@ docker-compose.yml  通过docker-compose创建数据库镜像，运行`docker-co
 docker run -it -d --rm --name postgresql -e POSTGRES_USER=yourusername -e POSTGRES_DB=yourdbname  -e POSTGRES_PASSWORD=yourpassword -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres
 ```
 
+```sh
+
+# 数据卷可以在容器之间共享和重用， 默认会一直存在，即使容器被删除（docker volume inspect pgdata可查看数据卷的本地位置，验证持久数据目录）
+
+$ docker volume create pgdata
+
+$ docker volume inspect pgdata
+
+docker run --name postgres --restart always -e POSTGRES_USER='postgres' -e POSTGRES_PASSWORD='123456' -e ALLOW_IP_RANGE=0.0.0.0/0 -v pgdata:/var/lib/postgresql/data -p 5432:5432 -d postgres
+
+# -e ALLOW_IP_RANGE=0.0.0.0/0，这个表示允许所有ip访问，如果不加，则非本机 ip 访问不了
+# -e POSTGRES_USER=abcuser 用户名
+# -e POSTGRES_PASS=‘abc123’ 指定密码
+```
 ## 功能
 
 ### 个人博客功能
