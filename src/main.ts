@@ -6,6 +6,7 @@ import { NestFactory } from '@nestjs/core';
 //   NestFastifyApplication,
 // } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -22,6 +23,8 @@ async function bootstrap() {
       },
     }),
   );
+  // 统一全局返回参数
+  app.useGlobalInterceptors(new TransformInterceptor());
 
   const options = new DocumentBuilder()
     .setTitle('personal-website')
