@@ -2,7 +2,7 @@ import { IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class LoginUserDto {
-  @ApiProperty({ description: '用户名', example: 'admin1' })
+  @ApiProperty({ description: '用户名', example: 'admin' })
   @IsNotEmpty({ message: '用户名不能为空' })
   readonly account: string;
 

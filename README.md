@@ -28,6 +28,16 @@ docker run --name postgres --restart always -e POSTGRES_USER='postgres' -e POSTG
 # -e POSTGRES_USER=abcuser 用户名
 # -e POSTGRES_PASS=‘abc123’ 指定密码
 ```
+
+.env文件例子
+``` 
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USER=postgres
+DATABASE_PASSWORD=123456
+DATABASE_NAME=personal_website
+JWT_SECRET=test
+```
 ## 功能
 
 ### 个人博客功能
@@ -55,7 +65,7 @@ docker run --name postgres --restart always -e POSTGRES_USER='postgres' -e POSTG
 
 1. 2022.05.21
 
-确定 1.0.0 要做的功能，用户管理、用户登录、博客功能
+确定 0.0.1 要做的功能，用户管理、用户登录、博客功能
 
 用户管理、
 pinia 用户登录

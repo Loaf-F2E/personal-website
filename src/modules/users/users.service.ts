@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, Res } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -119,8 +119,6 @@ export class UsersService {
       account: user.account,
       sub: user.id,
       role: user.role,
-      // secret: `${process.env.JWT_SECRET}`,
-      // secret: 'test',
       secret: this.configService.get('JWT_SECRET'),
     });
 

@@ -1,12 +1,13 @@
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestFactory } from '@nestjs/core';
-// import {
-//   FastifyAdapter,
-//   NestFastifyApplication,
-// } from '@nestjs/platform-fastify';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn'; // 导入本地化语言
 import { AppModule } from './app.module';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { HttpExceptionFilter } from './common/exceptions/http.exception.filter';
+
+dayjs.locale('zh-cn'); // 使用本地化语言
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -25,12 +26,14 @@ async function bootstrap() {
   );
   // 统一全局返回参数
   app.useGlobalInterceptors(new TransformInterceptor());
+  // 统一错误拦截器
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   const options = new DocumentBuilder()
     .setTitle('personal-website')
     .setDescription('personal-website application')
     .addBearerAuth()
-    .setVersion('1.0.0')
+    .setVersion('0.0.1')
     .build();
   const document = SwaggerModule.createDocument(app, options);
 
