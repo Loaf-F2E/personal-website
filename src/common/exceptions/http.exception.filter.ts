@@ -19,7 +19,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
       exception instanceof HttpException
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
-    console.log('exception :>> ', exception.getResponse());
     const exceptionRes: any = exception.getResponse();
     let resultMessage = exception.message;
     let resultCode = 1;
@@ -38,7 +37,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       params: resultParams,
       path: request.url, // 错误的url地址
       method: request.method, // 请求方式
-      timestamp: formatDate(Date.parse(new Date().toString())), // 错误的时间
+      data: formatDate(Date.parse(new Date().toString())), // 错误的时间
     };
     // // 打印日志
     Logger.error(

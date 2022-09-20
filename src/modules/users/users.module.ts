@@ -9,17 +9,6 @@ import { LocalStrategy } from './local.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
-// const jwtModule = JwtModule.registerAsync({
-//   imports: [ConfigModule],
-//   inject: [ConfigService],
-//   useFactory: async (configService: ConfigService) => {
-//     return {
-//       secret: configService.get('JWT_SECRET'),
-//       signOptions: { expiresIn: '4h' },
-//     };
-//   },
-// });
-
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
@@ -30,16 +19,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       useFactory: async (configService: ConfigService) => {
         return {
           secret: configService.get('JWT_SECRET'),
-          // secret: 'ThisIsASecretKey',
-          signOptions: { expiresIn: '4h' },
+          signOptions: { expiresIn: '8h' },
         };
       },
     }),
-    // JwtModule.register({
-    //   // secret: `${process.env.JWT_SECRET}`,
-    //   secret: 'test',
-    //   signOptions: { expiresIn: '8h' },
-    // }),
   ],
   controllers: [UsersController],
   providers: [UsersService, JwtStrateagy, LocalStrategy, ConfigService],
