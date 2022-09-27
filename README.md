@@ -50,7 +50,8 @@ JWT_SECRET=test
 | user(用户)    | write&read(读和写评论) |
 | visitor(访客) | read(只读)             |
 
-#### blog (帖子)
+## Entity
+#### articles (帖子)
 
 | params     | description     |
 | ---------- | --------------- |
@@ -60,6 +61,13 @@ JWT_SECRET=test
 | createTime | 创建时间        |
 | updateTime | 更新时间        |
 | author     | 作者            |
+
+#### tags (标签)
+
+| params | description |
+| ------ | ----------- |
+| name   | 标签名称    |
+| color  | 标签颜色    |
 
 ## 会议纪要 Minutes of meeting
 

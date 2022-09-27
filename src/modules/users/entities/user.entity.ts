@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { roleType, userState } from 'src/constants/user';
+import { roleType, userStatus } from 'src/constants/user';
 
 /**
  * 用户表
@@ -26,7 +26,7 @@ export class User {
   role: number;
 
   @Column({
-    default: userState.Effective,
+    default: userStatus.Effective,
     comment: '状态：0-失效|1-有效|2-删除',
   })
   user_status: number;

@@ -4,7 +4,13 @@ export enum roleType {
   visitor = 2, // 游客
 }
 
-export enum userState {
+export enum userStatus {
+  Fail = 0, // 失效
+  Effective = 1, // 有效
+  Deleted = 2, // 删除
+}
+
+export enum tgaStatus {
   Fail = 0, // 失效
   Effective = 1, // 有效
   Deleted = 2, // 删除
