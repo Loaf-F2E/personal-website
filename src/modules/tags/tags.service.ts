@@ -36,7 +36,7 @@ export class TagsService {
     const { pageNo = 1, pageSize = 10 } = paginationQuery;
 
     return this.tagRepository.query(
-      `SELECT * FORM "public"."tga" WHERE "status" !== '${
+      `SELECT * FROM "public"."tag" WHERE "status" != '${
         tgaStatus.Deleted
       }' order by id limit ${pageSize} OFFSET ${(pageNo - 1) * pageSize}`,
     );

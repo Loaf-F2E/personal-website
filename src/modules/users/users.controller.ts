@@ -27,6 +27,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @ApiOperation({ summary: '创建用户' })
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
@@ -41,11 +42,15 @@ export class UsersController {
     return this.usersService.findAll(paginationQuery);
   }
 
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: '查找用户' })
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.findOne(id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: '修改用户' })
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -54,11 +59,14 @@ export class UsersController {
     return this.usersService.update(id, updateUserDto);
   }
 
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: '删除用户' })
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.remove(id);
   }
 
+  @ApiOperation({ summary: '登录' })
   @UseGuards(AuthGuard('local'))
   @Post('login')
   @ApiBody({
