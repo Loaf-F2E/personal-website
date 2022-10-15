@@ -33,6 +33,7 @@ async function bootstrap() {
     .setTitle('personal-website')
     .setDescription('personal-website application')
     .addBearerAuth()
+    .addSecurityRequirements('bearer')
     .setVersion('0.0.1')
     .build();
   const document = SwaggerModule.createDocument(app, options);

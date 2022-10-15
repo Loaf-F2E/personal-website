@@ -23,7 +23,6 @@ import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('users')
 @Controller('users')
-// @UseGuards(AuthGuard('jwt'))
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -34,7 +33,7 @@ export class UsersController {
   }
 
   @ApiOperation({ summary: '获取所有用户信息' })
-  @ApiBearerAuth() // // swagger文档设置token
+  // @ApiBearerAuth() // // swagger文档设置token
   @UseGuards(AuthGuard('jwt'))
   @Get()
   findAll(@Query() paginationQuery: PaginationQueryDto, @Request() req) {
@@ -43,6 +42,7 @@ export class UsersController {
   }
 
   @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
   @ApiOperation({ summary: '查找用户' })
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
