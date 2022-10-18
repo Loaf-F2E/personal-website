@@ -125,7 +125,7 @@ export class UsersService {
     return {
       account: user.account,
       access_token: token,
-      statusCode: 200,
+      code: 200,
     };
   }
 }

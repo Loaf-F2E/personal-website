@@ -15,3 +15,9 @@ export enum tgaStatus {
   Effective = 1, // 有效
   Deleted = 2, // 删除
 }
+
+export enum articleStatus {
+  Fail = 0, // 失效
+  Effective = 1, // 有效
+  Deleted = 2, // 删除
+}

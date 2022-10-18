@@ -20,13 +20,14 @@ export class TransformInterceptor<T>
     next: CallHandler,
   ): Observable<Response<T>> {
     return next.handle().pipe(
-      map((data) => ({
-        data,
-        code: 0,
-        extra: {},
-        message: 'success',
-        success: true,
-      })),
+      map(({ data, message = '操作成功', extra = {}, code = 0 }) => {
+        return {
+          data,
+          code,
+          extra,
+          message,
+        };
+      }),
     );
   }
 }

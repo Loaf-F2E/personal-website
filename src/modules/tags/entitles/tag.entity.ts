@@ -17,4 +17,7 @@ export class Tag {
     comment: '状态：0-失效|1-有效|2-删除',
   })
   status: number;
+
+  @Column({ comment: '创建者' })
+  createBy: number;
 }
