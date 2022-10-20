@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import appConfig from './config/app.config';
 import { DatabaseModule } from './database/database.module';
+import { ArticlesModule } from './modules/articles/articles.module';
 import { TagsModule } from './modules/tags/tags.module';
 import { UsersModule } from './modules/users/users.module';
 
@@ -27,6 +28,7 @@ import { UsersModule } from './modules/users/users.module';
     DatabaseModule,
     UsersModule,
     TagsModule,
+    ArticlesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

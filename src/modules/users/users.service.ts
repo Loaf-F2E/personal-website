@@ -61,12 +61,14 @@ export class UsersService {
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     const user = await this.userRepository.preload({
-      id: id,
+      userId: id,
       ...updateUserDto,
     });
 
     if (!user) {
-      throw new NotFoundException(`User #${id} not found`);
+      return {
+        msg: '该用户不存在！',
+      };
     }
 
     return this.userRepository.save(user);

@@ -21,7 +21,7 @@ export class TagsService {
 
   async update(id: number, updateTagDto: UpdateTagDto) {
     const tag = await this.tagRepository.preload({
-      id: id,
+      tagId: id,
       ...updateTagDto,
     });
 

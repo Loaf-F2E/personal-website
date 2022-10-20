@@ -17,4 +17,8 @@ export class CreateTagDto {
   @ApiProperty({ description: '标签拥有者' })
   @IsNumber()
   readonly createBy: number;
+
+  @ApiProperty({ description: '被引用次数' })
+  @IsNumber()
+  readonly count: number;
 }

@@ -7,8 +7,8 @@ import { roleType, userStatus } from 'src/constants/user';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn({ name: 'user_id' })
+  userId: number;
 
   @Column({ comment: '账号', unique: true })
   account: string;

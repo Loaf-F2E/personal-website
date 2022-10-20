@@ -1,10 +1,17 @@
 import { articleStatus } from 'src/constants/user';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Tag } from 'src/modules/tags/entitles/tag.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Article {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn({ name: 'article_id' })
+  articleId: number;
 
   @Column({ comment: '标题', unique: true })
   title: string;
@@ -12,9 +19,22 @@ export class Article {
   @Column({ comment: '内容', unique: true })
   content: string;
 
-  @OneToMany()
-  @Column({ comment: '标签' })
-  tag: number;
+  @Column({ comment: '标签', array: true })
+  @ManyToMany(() => Tag, (tag) => tag.tagId)
+  @JoinTable({
+    name: 'article_tag',
+    joinColumns: [
+      {
+        name: 'article_id',
+      },
+    ],
+    inverseJoinColumns: [
+      {
+        name: 'tag_id',
+      },
+    ],
+  })
+  tags: Tag[];
 
   @Column({
     default: articleStatus.Effective,

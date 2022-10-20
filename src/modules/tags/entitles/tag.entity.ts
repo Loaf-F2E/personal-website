@@ -1,10 +1,11 @@
 import { tgaStatus } from 'src/constants/user';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Article } from 'src/modules/articles/entitles/article.entity';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Tag {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn({ name: 'tag_id' })
+  tagId: number;
 
   @Column({ comment: '名称', unique: true })
   name: string;
@@ -20,4 +21,10 @@ export class Tag {
 
   @Column({ comment: '创建者' })
   createBy: number;
+
+  @Column({ comment: '被引用次数', default: 0 })
+  count: number;
+
+  @ManyToMany(() => Article, (article) => article.tags)
+  articles: Article[];
 }
