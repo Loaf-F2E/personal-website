@@ -13,13 +13,13 @@ export class Article {
   @PrimaryGeneratedColumn({ name: 'article_id' })
   articleId: number;
 
-  @Column({ comment: '标题', unique: true })
+  @Column({ comment: '标题' })
   title: string;
 
-  @Column({ comment: '内容', unique: true })
+  @Column({ comment: '内容' })
   content: string;
 
-  @Column({ comment: '标签', array: true })
+  @Column({ comment: '标签', type: 'simple-array' })
   @ManyToMany(() => Tag, (tag) => tag.tagId)
   @JoinTable({
     name: 'article_tag',
