@@ -1,10 +1,12 @@
 import { articleStatus } from 'src/constants/user';
 import { Tag } from 'src/modules/tags/entitles/tag.entity';
+import { User } from 'src/modules/users/entities/user.entity';
 import {
   Column,
   Entity,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -42,6 +44,28 @@ export class Article {
   })
   status: number;
 
-  @Column({ comment: '创建者' })
-  createBy: number;
+  // @Column({ comment: '创建者' })
+  // createBy: number;
+
+  @ManyToOne(() => User, (user) => user.articles)
+  @JoinTable({
+    name: 'article_user',
+    joinColumns: [
+      {
+        name: 'article_id',
+      },
+    ],
+    inverseJoinColumns: [
+      {
+        name: 'user_id',
+      },
+    ],
+  })
+  user: User;
+
+  @Column({ type: 'date', comment: '创建时间', nullable: true })
+  create_time: Date;
+
+  @Column({ type: 'date', comment: '修改时间', nullable: true })
+  update_time: Date;
 }

@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString } from 'class-validator';
-import { Tag } from 'src/modules/tags/entitles/tag.entity';
+import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateArticleDto {
   @ApiProperty({ description: '文章标题' })
@@ -13,13 +12,27 @@ export class CreateArticleDto {
 
   @ApiProperty({ description: '文章标签id' })
   @IsString()
-  readonly tags: Tag[];
+  readonly tags: string;
+
+  @ApiProperty({ description: '文章拥有者' })
+  @IsNumber()
+  readonly userId: number;
 
   @ApiProperty({ description: '文章状态' })
   @IsNumber()
   readonly status: number;
 
-  @ApiProperty({ description: '文章拥有者' })
-  @IsNumber()
-  readonly createBy: number;
+  // @ApiProperty({ description: '文章拥有者' })
+  // @IsNumber()
+  // readonly createBy: number;
+
+  @ApiProperty({ description: '文章创建时间' })
+  @IsDate()
+  @IsOptional()
+  readonly create_time: Date;
+
+  @ApiProperty({ description: '文章修改时间' })
+  @IsDate()
+  @IsOptional()
+  readonly update_time: Date;
 }

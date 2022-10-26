@@ -1,4 +1,4 @@
-import { tgaStatus } from 'src/constants/user';
+import { tagStatus } from 'src/constants/user';
 import { Article } from 'src/modules/articles/entitles/article.entity';
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -14,7 +14,7 @@ export class Tag {
   color: string;
 
   @Column({
-    default: tgaStatus.Effective,
+    default: tagStatus.Effective,
     comment: '状态：0-失效|1-有效|2-删除',
   })
   status: number;

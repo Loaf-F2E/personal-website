@@ -10,7 +10,7 @@ export enum userStatus {
   Deleted = 2, // 删除
 }
 
-export enum tgaStatus {
+export enum tagStatus {
   Fail = 0, // 失效
   Effective = 1, // 有效
   Deleted = 2, // 删除

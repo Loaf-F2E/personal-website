@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
-import { tgaStatus } from 'src/constants/user';
+import { tagStatus } from 'src/constants/user';
 import { Repository } from 'typeorm';
 import { CreateTagDto } from './dto/create-tag.dto';
 import { UpdateTagDto } from './dto/update-tag.dto';
@@ -38,7 +38,7 @@ export class TagsService {
     const { pageNo = 1, pageSize = 10 } = paginationQuery;
     const allTags = await this.tagRepository.query(
       `SELECT * FROM "public"."tag" WHERE "status" != '${
-        tgaStatus.Deleted
+        tagStatus.Deleted
       }' order by id limit ${pageSize} OFFSET ${(pageNo - 1) * pageSize}`,
     );
 
@@ -49,16 +49,16 @@ export class TagsService {
   }
 
   async findOne(id: number) {
-    const tga = await this.tagRepository.findOne(id);
+    const tag = await this.tagRepository.findOne(id);
 
-    if (!tga) {
+    if (!tag) {
       return {
         code: -1,
         message: '标签不存在！',
       };
     }
     return {
-      data: tga,
+      data: tag,
       message: '获取成功',
     };
   }
@@ -66,7 +66,7 @@ export class TagsService {
   async delete(id: number) {
     const tag = await this.tagRepository.findOne(id);
 
-    tag.status = tgaStatus.Deleted;
+    tag.status = tagStatus.Deleted;
     await this.tagRepository.save(tag);
     return {
       data: {},

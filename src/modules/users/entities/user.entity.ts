@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { roleType, userStatus } from 'src/constants/user';
+import { Article } from 'src/modules/articles/entitles/article.entity';
 
 /**
  * 用户表
@@ -37,8 +38,6 @@ export class User {
   @Column({ type: 'date', comment: '修改时间', nullable: true })
   update_time: Date;
 
-  // @BeforeInsert()
-  // async hashPassword() {
-  //   this.password = await bcrypt.hash(this.password, 10);
-  // }
+  @OneToMany(() => Article, (article) => article.articleId)
+  articles: Article[];
 }
