@@ -38,6 +38,6 @@ export class User {
   @Column({ type: 'date', comment: '修改时间', nullable: true })
   update_time: Date;
 
-  @OneToMany(() => Article, (article) => article.articleId)
+  @OneToMany(() => Article, (article) => article.user)
   articles: Article[];
 }

@@ -39,7 +39,7 @@ export class TagsService {
     const allTags = await this.tagRepository.query(
       `SELECT * FROM "public"."tag" WHERE "status" != '${
         tagStatus.Deleted
-      }' order by id limit ${pageSize} OFFSET ${(pageNo - 1) * pageSize}`,
+      }' order by tag_id limit ${pageSize} OFFSET ${(pageNo - 1) * pageSize}`,
     );
 
     return {

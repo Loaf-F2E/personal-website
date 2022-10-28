@@ -32,22 +32,22 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  @ApiOperation({ summary: '获取所有用户信息' })
-  // @ApiBearerAuth() // // swagger文档设置token
-  @UseGuards(AuthGuard('jwt'))
-  @Get()
-  findAll(@Query() paginationQuery: PaginationQueryDto, @Request() req) {
-    console.log('req :>> ', req.user);
-    return this.usersService.findAll(paginationQuery);
-  }
+  // @ApiOperation({ summary: '获取所有用户信息' })
+  // // @ApiBearerAuth() // // swagger文档设置token
+  // @UseGuards(AuthGuard('jwt'))
+  // @Get()
+  // findAll(@Query() paginationQuery: PaginationQueryDto, @Request() req) {
+  //   console.log('req :>> ', req.user);
+  //   return this.usersService.findAll(paginationQuery);
+  // }
 
-  @UseGuards(AuthGuard('jwt'))
-  @ApiBearerAuth()
-  @ApiOperation({ summary: '查找用户' })
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.usersService.findOne(id);
-  }
+  // @UseGuards(AuthGuard('jwt'))
+  // @ApiBearerAuth()
+  // @ApiOperation({ summary: '查找用户' })
+  // @Get(':id')
+  // findOne(@Param('id', ParseIntPipe) id: number) {
+  //   return this.usersService.findOne(id);
+  // }
 
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: '修改用户' })
@@ -78,5 +78,10 @@ export class UsersController {
 
     res.status(200).send(result);
     // return req.user;
+  }
+  @ApiOperation({ summary: '获取' })
+  @Get('/get')
+  async get() {
+    return this.usersService.getArticlesByUser();
   }
 }

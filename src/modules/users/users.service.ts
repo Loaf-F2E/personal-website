@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -45,7 +45,7 @@ export class UsersService {
     return this.userRepository.query(
       `SELECT * FROM "public"."user" WHERE "user_status" != '${
         userStatus.Deleted
-      }' order by id limit ${pageSize} OFFSET ${(pageNo - 1) * pageSize}`,
+      }' order by user_id limit ${pageSize} OFFSET ${(pageNo - 1) * pageSize}`,
     );
   }
 
@@ -53,10 +53,15 @@ export class UsersService {
     const user = await this.userRepository.findOne(idOrAccount);
 
     if (!user) {
-      throw new NotFoundException(`User #${idOrAccount} not found`);
+      return {
+        message: '该用户不存在！',
+      };
     }
 
-    return user;
+    return {
+      data: user,
+      message: '查找成功',
+    };
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
@@ -67,7 +72,7 @@ export class UsersService {
 
     if (!user) {
       return {
-        msg: '该用户不存在！',
+        message: '该用户不存在！',
       };
     }
 
@@ -75,7 +80,7 @@ export class UsersService {
   }
 
   async remove(id: number) {
-    const user = await this.findOne(id);
+    const { data: user } = await this.findOne(id);
 
     user.user_status = userStatus.Deleted;
     return this.userRepository.save(user);
@@ -91,13 +96,13 @@ export class UsersService {
 
     if (!user) {
       return {
-        msg: '该用户不存在！',
+        message: '该用户不存在！',
       };
     }
 
     if (user.password !== password) {
       return {
-        msg: '用户密码错误！',
+        message: '用户密码错误！',
       };
     }
 
@@ -128,6 +133,16 @@ export class UsersService {
       account: user.account,
       access_token: token,
       code: 200,
+    };
+  }
+
+  async getArticlesByUser() {
+    const a = await this.userRepository.find({
+      relations: ['articles', 'tags'],
+    });
+    console.log('a :>> ', a);
+    return {
+      data: a,
     };
   }
 }

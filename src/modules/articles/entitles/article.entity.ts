@@ -4,6 +4,7 @@ import { User } from 'src/modules/users/entities/user.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -44,23 +45,9 @@ export class Article {
   })
   status: number;
 
-  // @Column({ comment: '创建者' })
-  // createBy: number;
-
+  // user_id === Article.createBy
   @ManyToOne(() => User, (user) => user.articles)
-  @JoinTable({
-    name: 'article_user',
-    joinColumns: [
-      {
-        name: 'article_id',
-      },
-    ],
-    inverseJoinColumns: [
-      {
-        name: 'user_id',
-      },
-    ],
-  })
+  @JoinColumn({ name: 'createBy' })
   user: User;
 
   @Column({ type: 'date', comment: '创建时间', nullable: true })

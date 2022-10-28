@@ -18,7 +18,7 @@ export class ArticlesService {
   async create(createArticleDto: CreateArticleDto) {
     const list = [];
     const { tags, userId, ...params } = createArticleDto;
-    const user = await this.usersService.findOne(userId);
+    const { data: user } = await this.usersService.findOne(userId);
     const tagList = tags.split(',');
 
     if (!user) {
