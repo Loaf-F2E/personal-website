@@ -51,4 +51,17 @@ export class ArticlesService {
       message: '添加成功',
     };
   }
+
+  async findAll() {
+    const all = await this.articleRepository
+      .createQueryBuilder('article')
+      .select(['article', 'user.account', 'tag.name', 'tag.tagId', 'tag.color'])
+      .leftJoin('article.user', 'user')
+      .leftJoin('article.tags', 'tag')
+      .getMany();
+
+    return {
+      data: all,
+    };
+  }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ArticlesService } from './articles.service';
@@ -14,5 +14,11 @@ export class ArticleController {
   @Post()
   create(@Body() createArticleDto: CreateArticleDto) {
     return this.articlesService.create(createArticleDto);
+  }
+
+  @ApiOperation({ summary: '获取所有文章' })
+  @Get()
+  findAll() {
+    return this.articlesService.findAll();
   }
 }

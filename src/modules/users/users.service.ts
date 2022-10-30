@@ -135,14 +135,4 @@ export class UsersService {
       code: 200,
     };
   }
-
-  async getArticlesByUser() {
-    const a = await this.userRepository.find({
-      relations: ['articles', 'tags'],
-    });
-    console.log('a :>> ', a);
-    return {
-      data: a,
-    };
-  }
 }
