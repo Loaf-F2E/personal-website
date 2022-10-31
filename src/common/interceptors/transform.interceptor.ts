@@ -9,6 +9,9 @@ import { map } from 'rxjs/operators';
 
 interface Response<T> {
   data: T;
+  message: string;
+  extra: T;
+  code: number;
 }
 
 @Injectable()
@@ -20,7 +23,7 @@ export class TransformInterceptor<T>
     next: CallHandler,
   ): Observable<Response<T>> {
     return next.handle().pipe(
-      map(({ data, message = '操作成功', extra = {}, code = 0 }) => {
+      map(({ data = '', message = '操作成功', extra = {}, code = 0 }) => {
         return {
           data,
           code,

@@ -1,6 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { roleType, userStatus } from 'src/constants/user';
 import { Article } from 'src/modules/articles/entitles/article.entity';
+import { Tag } from 'src/modules/tags/entitles/tag.entity';
 
 /**
  * 用户表
@@ -40,4 +41,7 @@ export class User {
 
   @OneToMany(() => Article, (article) => article.user)
   articles: Article[];
+
+  @OneToMany(() => Tag, (tag) => tag.user)
+  tags: Tag[];
 }

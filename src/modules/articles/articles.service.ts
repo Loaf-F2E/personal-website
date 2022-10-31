@@ -15,9 +15,9 @@ export class ArticlesService {
     private readonly usersService: UsersService,
   ) {}
 
-  async create(createArticleDto: CreateArticleDto) {
+  async create(createArticleDto: CreateArticleDto, userId: number) {
     const list = [];
-    const { tags, userId, ...params } = createArticleDto;
+    const { tags, ...params } = createArticleDto;
     const { data: user } = await this.usersService.findOne(userId);
     const tagList = tags.split(',');
 
@@ -52,11 +52,11 @@ export class ArticlesService {
     };
   }
 
-  async findAll() {
+  async findAll(id: number) {
     const all = await this.articleRepository
       .createQueryBuilder('article')
-      .select(['article', 'user.account', 'tag.name', 'tag.tagId', 'tag.color'])
-      .leftJoin('article.user', 'user')
+      .select(['article', 'tag.name', 'tag.tagId', 'tag.color'])
+      .where('article.createBy = :id', { id: id })
       .leftJoin('article.tags', 'tag')
       .getMany();
 

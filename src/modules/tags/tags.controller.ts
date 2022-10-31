@@ -9,10 +9,13 @@ import {
   Get,
   UseGuards,
   Query,
+  Req,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { userInfo } from 'src/constants/user';
 import { CreateTagDto } from './dto/create-tag.dto';
 import { UpdateTagDto } from './dto/update-tag.dto';
 import { TagsService } from './tags.service';
@@ -25,8 +28,10 @@ export class TagsController {
 
   @ApiOperation({ summary: '创建标签' })
   @Post()
-  create(@Body() createTagDto: CreateTagDto) {
-    return this.tagsService.create(createTagDto);
+  create(@Body() createTagDto: CreateTagDto, @Req() request: Request) {
+    const user: userInfo = request.user;
+
+    return this.tagsService.create(createTagDto, user.userId);
   }
 
   @ApiOperation({ summary: '获取所有标签' })

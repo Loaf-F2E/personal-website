@@ -21,3 +21,9 @@ export enum articleStatus {
   Effective = 1, // 有效
   Deleted = 2, // 删除
 }
+
+export interface userInfo {
+  userId?: number;
+  account?: string;
+  role?: number;
+}

@@ -1,10 +1,12 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { Request } from 'express';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
+import { userInfo } from 'src/constants/user';
 
-// @UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard('jwt'))
 @ApiTags('articles')
 @Controller('articles')
 export class ArticleController {
@@ -12,13 +14,17 @@ export class ArticleController {
 
   @ApiOperation({ summary: '创建文章' })
   @Post()
-  create(@Body() createArticleDto: CreateArticleDto) {
-    return this.articlesService.create(createArticleDto);
+  create(@Body() createArticleDto: CreateArticleDto, @Req() request: Request) {
+    const user: userInfo = request.user;
+
+    return this.articlesService.create(createArticleDto, user.userId);
   }
 
-  @ApiOperation({ summary: '获取所有文章' })
+  @ApiOperation({ summary: '获取该用户的所有文章' })
   @Get()
-  findAll() {
-    return this.articlesService.findAll();
+  findAll(@Req() request: Request) {
+    const user: userInfo = request.user;
+
+    return this.articlesService.findAll(user.userId);
   }
 }

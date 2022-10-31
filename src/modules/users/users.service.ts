@@ -124,15 +124,16 @@ export class UsersService {
     // sign 的参数 payload 是可逆加密的，拿到 token 后是可以解密成明文内容的，所以这部分不要放敏感信息。
     const token = await this.jwtService.sign({
       account: user.account,
-      sub: user.id,
+      sub: user.user_id,
       role: user.role,
       secret: this.configService.get('JWT_SECRET'),
     });
 
     return {
-      account: user.account,
-      access_token: token,
-      code: 200,
+      data: {
+        account: user.account,
+        access_token: token,
+      },
     };
   }
 }

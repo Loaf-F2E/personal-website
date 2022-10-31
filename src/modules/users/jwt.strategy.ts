@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy, StrategyOptions } from 'passport-jwt';
 
-// 服务端根据jwt字符串的内容 找到用户信息
+// 服务端根据jwt字符串的内容 找到用户信息  @Req() request: Request request.user
 // http header中添加
 // Authorization: Bearer <token>
 @Injectable()
@@ -18,7 +18,7 @@ export class JwtStrateagy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    console.log('JWT验证 - payload :>> ', payload);
+    console.log('jwt payload: ', payload);
     return {
       userId: payload.sub,
       account: payload.account,

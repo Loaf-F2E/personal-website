@@ -9,7 +9,6 @@ import {
   Query,
   ParseIntPipe,
   UseGuards,
-  Request,
   Req,
   Res,
 } from '@nestjs/common';
@@ -20,6 +19,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { Request } from 'express';
 
 @ApiTags('users')
 @Controller('users')
@@ -36,8 +36,7 @@ export class UsersController {
   // @ApiBearerAuth() // // swagger文档设置token
   @UseGuards(AuthGuard('jwt'))
   @Get()
-  findAll(@Query() paginationQuery: PaginationQueryDto, @Request() req) {
-    console.log('req :>> ', req.user);
+  findAll(@Query() paginationQuery: PaginationQueryDto) {
     return this.usersService.findAll(paginationQuery);
   }
 
@@ -73,10 +72,7 @@ export class UsersController {
     description: '用户登录',
     type: LoginUserDto,
   })
-  async login(@Body() loginUserDto: LoginUserDto, @Req() req, @Res() res) {
-    const result = await this.usersService.login(loginUserDto);
-
-    res.status(200).send(result);
-    // return req.user;
+  async login(@Body() loginUserDto: LoginUserDto) {
+    return this.usersService.login(loginUserDto);
   }
 }

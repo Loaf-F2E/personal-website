@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { tagStatus } from 'src/constants/user';
 import { Repository } from 'typeorm';
+import { UsersService } from '../users/users.service';
 import { CreateTagDto } from './dto/create-tag.dto';
 import { UpdateTagDto } from './dto/update-tag.dto';
 import { Tag } from './entitles/tag.entity';
@@ -11,12 +12,18 @@ export class TagsService {
   constructor(
     @InjectRepository(Tag)
     private tagRepository: Repository<Tag>,
+    private readonly usersService: UsersService,
   ) {}
 
-  create(createTagDto: CreateTagDto) {
-    const tag = this.tagRepository.create({ ...createTagDto });
+  async create(createTagDto: CreateTagDto, userId: number) {
+    const { data: user } = await this.usersService.findOne(userId);
+    const tag = this.tagRepository.create({ ...createTagDto, user: user });
 
-    return this.tagRepository.save(tag);
+    await this.tagRepository.save(tag);
+
+    return {
+      message: '添加成功',
+    };
   }
 
   async update(id: number, updateTagDto: UpdateTagDto) {

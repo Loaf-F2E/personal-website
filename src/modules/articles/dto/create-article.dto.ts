@@ -14,17 +14,9 @@ export class CreateArticleDto {
   @IsString()
   readonly tags: string;
 
-  @ApiProperty({ description: '文章拥有者' })
-  @IsNumber()
-  readonly userId: number;
-
   @ApiProperty({ description: '文章状态' })
   @IsNumber()
   readonly status: number;
-
-  // @ApiProperty({ description: '文章拥有者' })
-  // @IsNumber()
-  // readonly createBy: number;
 
   @ApiProperty({ description: '文章创建时间' })
   @IsDate()

@@ -1,6 +1,14 @@
 import { tagStatus } from 'src/constants/user';
 import { Article } from 'src/modules/articles/entitles/article.entity';
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/modules/users/entities/user.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Tag {
@@ -19,11 +27,12 @@ export class Tag {
   })
   status: number;
 
-  @Column({ comment: '创建者' })
-  createBy: number;
-
   @Column({ comment: '被引用次数', default: 0 })
   count: number;
+
+  @ManyToOne(() => User, (user) => user.tags)
+  @JoinColumn({ name: 'createBy' })
+  user: User;
 
   @ManyToMany(() => Article, (article) => article.tags)
   articles: Article[];
