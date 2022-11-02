@@ -9,8 +9,6 @@ import {
   Query,
   ParseIntPipe,
   UseGuards,
-  Req,
-  Res,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
@@ -19,7 +17,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { Request } from 'express';
 
 @ApiTags('users')
 @Controller('users')

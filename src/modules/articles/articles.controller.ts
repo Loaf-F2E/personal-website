@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -26,5 +35,11 @@ export class ArticleController {
     const user: userInfo = request.user;
 
     return this.articlesService.findAll(user.userId);
+  }
+
+  @ApiOperation({ summary: '查找文章' })
+  @Get(':id')
+  findOne(@Param('id') id: number | string) {
+    return this.articlesService.findOne(id);
   }
 }

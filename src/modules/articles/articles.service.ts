@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { TagsService } from '../tags/tags.service';
 import { UsersService } from '../users/users.service';
 import { CreateArticleDto } from './dto/create-article.dto';
+import { UpdateArticleDto } from './dto/update-article.dto';
 import { Article } from './entitles/article.entity';
 
 @Injectable()
@@ -20,13 +21,6 @@ export class ArticlesService {
     const { tags, ...params } = createArticleDto;
     const { data: user } = await this.usersService.findOne(userId);
     const tagList = tags.split(',');
-
-    if (!user) {
-      return {
-        code: -1,
-        message: '该用户不存在',
-      };
-    }
 
     for (let i = 0; i < tagList.length; i++) {
       const { data } = await this.tagsService.findOne(Number(tagList[i]));
@@ -64,4 +58,27 @@ export class ArticlesService {
       data: all,
     };
   }
+
+  async findOne(idOrTitle: number | string) {
+    const article = await this.articleRepository
+      .createQueryBuilder('article')
+      .select(['article', 'tag.name', 'tag.tagId', 'tag.color'])
+      .where('article.article_id = :id', { id: idOrTitle })
+      .orWhere('article.title = :title', { title: idOrTitle })
+      .leftJoin('article.tags', 'tag')
+      .getOne();
+
+    if (!article) {
+      return {
+        message: '该文章不存在！',
+      };
+    }
+
+    return {
+      data: article,
+      message: '查找成功',
+    };
+  }
+
+  // async update(updateArticleDto: UpdateArticleDto, id: number) {}
 }
