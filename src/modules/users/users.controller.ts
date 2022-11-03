@@ -9,6 +9,8 @@ import {
   Query,
   ParseIntPipe,
   UseGuards,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
@@ -17,6 +19,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('users')
 @Controller('users')
@@ -71,5 +74,14 @@ export class UsersController {
   })
   async login(@Body() loginUserDto: LoginUserDto) {
     return this.usersService.login(loginUserDto);
+  }
+
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('files'))
+  uploadFile(@UploadedFile() files) {
+    console.log('file :>> ', files);
+    return {
+      data: {},
+    };
   }
 }

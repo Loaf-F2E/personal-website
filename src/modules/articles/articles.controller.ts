@@ -5,11 +5,12 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Request } from 'express';
+import { query, Request } from 'express';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
@@ -29,17 +30,17 @@ export class ArticleController {
     return this.articlesService.create(createArticleDto, user.userId);
   }
 
+  @ApiOperation({ summary: '根据(id)或者(title)查找' })
+  @Get('/one')
+  findOne(@Query() query) {
+    return this.articlesService.findOne(query?.id, query?.title);
+  }
+
   @ApiOperation({ summary: '获取该用户的所有文章' })
   @Get()
   findAll(@Req() request: Request) {
     const user: userInfo = request.user;
 
     return this.articlesService.findAll(user.userId);
-  }
-
-  @ApiOperation({ summary: '查找文章' })
-  @Get(':id')
-  findOne(@Param('id') id: number | string) {
-    return this.articlesService.findOne(id);
   }
 }

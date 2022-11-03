@@ -59,12 +59,12 @@ export class ArticlesService {
     };
   }
 
-  async findOne(idOrTitle: number | string) {
+  async findOne(id: string, title: string) {
     const article = await this.articleRepository
       .createQueryBuilder('article')
       .select(['article', 'tag.name', 'tag.tagId', 'tag.color'])
-      .where('article.article_id = :id', { id: idOrTitle })
-      .orWhere('article.title = :title', { title: idOrTitle })
+      .where('article.article_id = :id', { id: id })
+      .orWhere('article.title = :title', { title: title })
       .leftJoin('article.tags', 'tag')
       .getOne();
 
