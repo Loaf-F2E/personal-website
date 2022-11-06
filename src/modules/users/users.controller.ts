@@ -11,8 +11,10 @@ import {
   UseGuards,
   UploadedFile,
   UseInterceptors,
+  Res,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -78,25 +80,31 @@ export class UsersController {
     return this.usersService.login(loginUserDto);
   }
 
-  @Post('upload')
-  @UseInterceptors(
-    FileInterceptor('file', {
-      storage: multer.diskStorage({
-        destination: (req, file, cb) => {
-          cb(null, '/Users/xxxxx/Desktop/aaa');
-        },
-        filename: (req, file, cb) => {
-          cb(null, file.originalname);
-        },
-      }),
-    }),
-  )
-  uploadFile(@UploadedFile() file) {
-    console.log('file :>> ', file);
-    // fs.writeFileSync(`./img/1.png`, file.buffer);
+  // 处理上传图片 保存在磁盘上的命令最好用 img/2022/11/6/ 这种格式来保存
+  // 因为不同操作系统对于每个文件内的数量可能有限制
+  // @Post('upload')
+  // @UseInterceptors(
+  //   FileInterceptor('file', {
+  //     storage: multer.diskStorage({
+  //       destination: (req, file, cb) => {
+  //         cb(null, './src/img/');
+  //       },
+  //       filename: (req, file, cb) => {
+  //         cb(null, file.originalname);
+  //       },
+  //     }),
+  //   }),
+  // )
+  // uploadFile(@UploadedFile() file, @Res() res: Response) {
+  //   console.log('file :>> ', file);
 
-    return {
-      data: {},
-    };
-  }
+  // res.download(file.path, (err) => {
+  //   console.log('err :>> ', err);
+  // });
+  // fs.writeFileSync(`./img/1.png`, file.buffer);
+
+  //   return {
+  //     data: {},
+  //   };
+  // }
 }
