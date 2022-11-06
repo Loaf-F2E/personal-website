@@ -20,6 +20,8 @@ import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
+import * as fs from 'fs';
+import multer = require('multer');
 
 @ApiTags('users')
 @Controller('users')
@@ -77,9 +79,22 @@ export class UsersController {
   }
 
   @Post('upload')
-  @UseInterceptors(FileInterceptor('files'))
-  uploadFile(@UploadedFile() files) {
-    console.log('file :>> ', files);
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: multer.diskStorage({
+        destination: (req, file, cb) => {
+          cb(null, '/Users/xxxxx/Desktop/aaa');
+        },
+        filename: (req, file, cb) => {
+          cb(null, file.originalname);
+        },
+      }),
+    }),
+  )
+  uploadFile(@UploadedFile() file) {
+    console.log('file :>> ', file);
+    // fs.writeFileSync(`./img/1.png`, file.buffer);
+
     return {
       data: {},
     };
