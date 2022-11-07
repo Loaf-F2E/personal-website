@@ -23,14 +23,23 @@ export class TransformInterceptor<T>
     next: CallHandler,
   ): Observable<Response<T>> {
     return next.handle().pipe(
-      map(({ data = '', message = '操作成功', extra = {}, code = 0 }) => {
-        return {
-          data,
-          code,
-          extra,
-          message,
-        };
-      }),
+      map(
+        ({
+          data = '',
+          message = '操作成功',
+          extra = {},
+          code = 0,
+          status = 200,
+        }) => {
+          context.switchToHttp().getResponse().status(status);
+          return {
+            data,
+            code,
+            extra,
+            message,
+          };
+        },
+      ),
     );
   }
 }
