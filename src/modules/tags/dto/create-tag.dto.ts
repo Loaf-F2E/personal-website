@@ -12,7 +12,7 @@ export class CreateTagDto {
 
   @ApiProperty({ description: '标签状态' })
   @IsNumber()
-  readonly status: number;
+  readonly tag_status: number;
 
   @ApiProperty({ description: '被引用次数' })
   @IsNumber()

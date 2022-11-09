@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
-import { userStatus } from 'src/constants/user';
+import { status } from 'src/constants/user';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
@@ -35,7 +35,7 @@ export class UsersService {
      */
     const total = await this.userRepository
       .query(
-        `select count(1) as total from "public"."user" WHERE "user_status" != '${userStatus.Deleted}'`,
+        `select count(1) as total from "public"."user" WHERE "user_status" != '${status.Deleted}'`,
       )
       .then((data) => {
         return data[0]?.total;
@@ -44,7 +44,7 @@ export class UsersService {
 
     return this.userRepository.query(
       `SELECT * FROM "public"."user" WHERE "user_status" != '${
-        userStatus.Deleted
+        status.Deleted
       }' order by user_id limit ${pageSize} OFFSET ${(pageNo - 1) * pageSize}`,
     );
   }
@@ -82,7 +82,7 @@ export class UsersService {
   async remove(id: number) {
     const { data: user } = await this.findOne(id);
 
-    user.user_status = userStatus.Deleted;
+    user.user_status = status.Deleted;
     return this.userRepository.save(user);
   }
 
@@ -132,6 +132,7 @@ export class UsersService {
     return {
       data: {
         account: user.account,
+        role: user.role,
         access_token: token,
       },
     };

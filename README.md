@@ -2,21 +2,17 @@
 
 ## technology stack(技术栈)
 
-nest
+node: nest
+database: postgresql
 ## docker 
 
 docker-compose.yml  通过docker-compose创建数据库镜像，运行`docker-compose up -d`
 如果连接的是服务器上的数据库，则需要在服务器上创建数据库。命令可参考
 
-`$HOME/docker/volumes/postgres:/var/lib/postgresql/data`的意思是将容器中的 /var/lib/postgresql/data 目录挂载至磁盘上的 $HOME/docker/volumes/postgres ，以便数据的持久化。因为 docker container 对于改动只是暂存的，所以如果我们的 container 挂掉了，那么我们数据库中存储的数据就全无了
-
-```sh
-docker run -it -d --rm --name postgresql -e POSTGRES_USER=yourusername -e POSTGRES_DB=yourdbname  -e POSTGRES_PASSWORD=yourpassword -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres
-```
-
 ```sh
 
-# 数据卷可以在容器之间共享和重用， 默认会一直存在，即使容器被删除（docker volume inspect pgdata可查看数据卷的本地位置，验证持久数据目录）
+# 数据卷可以在容器之间共享和重用， 默认会一直存在，即使容器被删除（docker volume inspect pgdata可查看数据卷的本地位置，
+# 验证持久数据目录） docker container 对于改动只是暂存的，所以如果我们的 container 挂掉了，那么我们数据库中存储的数据就全无了
 
 $ docker volume create pgdata
 
@@ -28,6 +24,8 @@ docker run --name postgres --restart always -e POSTGRES_USER='postgres' -e POSTG
 # -e POSTGRES_USER=abcuser 用户名
 # -e POSTGRES_PASS=‘abc123’ 指定密码
 ```
+
+## 全局变量 
 
 .env文件例子
 ``` 
@@ -42,7 +40,8 @@ JWT_SECRET=test
 
 ### 个人博客功能
 
-#### System role(系统角色)
+## constants
+### System role(系统角色)
 
 | role(角色)    | permissions(权限)      |
 | ------------- | ---------------------- |
@@ -50,24 +49,52 @@ JWT_SECRET=test
 | user(用户)    | write&read(读和写评论) |
 | visitor(访客) | read(只读)             |
 
+### status (状态)
+
+```ts
+export enum status {
+  Fail = 0, // 失效
+  Effective = 1, // 有效
+  Deleted = 2, // 删除
+}
+```
+
 ## Entity
-#### articles (帖子)
+
+### user (用户)
+
+| params       | description     |
+| ----------   | --------------- |
+| user_id      | 自增id           |
+| account      | 账号             |
+| password     | 密码             |
+| email        | 邮箱             |
+| role         | 用户角色          |
+| user_status  | 状态             |
+### articles (帖子)
 
 | params     | description     |
 | ---------- | --------------- |
-| tag        | 可根据 tag 分类 |
+| article_id | 自增id           |
+| tags        | 关联Tag         |
+| user        | 关联User        |
 | title      | 标题            |
 | content    | markdown 内容   |
+| status    |  状态   |
 | createTime | 创建时间        |
 | updateTime | 更新时间        |
-| author     | 作者            |
 
-#### tags (标签)
+### tags (标签)
 
 | params | description |
 | ------ | ----------- |
 | name   | 标签名称    |
 | color  | 标签颜色    |
+| tag_status  | 状态    |
+| count  | 被引用次数    |
+| user   | 关联User        |
+| articles | 关联Article   |
+
 
 ## 会议纪要 Minutes of meeting
 

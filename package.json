@@ -2,9 +2,9 @@
   "name": "personal-website",
   "version": "1.0.0",
   "description": "",
-  "author": "",
+  "author": "https://github.com/orgs/Loaf-F2E/teams/dev/members",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",

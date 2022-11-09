@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
-import { tagStatus } from 'src/constants/user';
+import { status } from 'src/constants/user';
 import { Repository } from 'typeorm';
 import { UsersService } from '../users/users.service';
 import { CreateTagDto } from './dto/create-tag.dto';
@@ -44,8 +44,8 @@ export class TagsService {
   async findAll(paginationQuery: PaginationQueryDto) {
     const { pageNo = 1, pageSize = 10 } = paginationQuery;
     const allTags = await this.tagRepository.query(
-      `SELECT * FROM "public"."tag" WHERE "status" != '${
-        tagStatus.Deleted
+      `SELECT * FROM "public"."tag" WHERE "tag_status" != '${
+        status.Deleted
       }' order by tag_id limit ${pageSize} OFFSET ${(pageNo - 1) * pageSize}`,
     );
 
@@ -73,7 +73,7 @@ export class TagsService {
   async delete(id: number) {
     const tag = await this.tagRepository.findOne(id);
 
-    tag.status = tagStatus.Deleted;
+    tag.tag_status = status.Deleted;
     await this.tagRepository.save(tag);
     return {
       data: {},

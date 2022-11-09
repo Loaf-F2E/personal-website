@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { roleType, userStatus } from 'src/constants/user';
+import { roleType, status } from 'src/constants/user';
 import { Article } from 'src/modules/articles/entitles/article.entity';
 import { Tag } from 'src/modules/tags/entitles/tag.entity';
 
@@ -28,7 +28,7 @@ export class User {
   role: number;
 
   @Column({
-    default: userStatus.Effective,
+    default: status.Effective,
     comment: '状态：0-失效|1-有效|2-删除',
   })
   user_status: number;

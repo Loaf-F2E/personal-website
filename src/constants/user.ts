@@ -4,19 +4,7 @@ export enum roleType {
   visitor = 2, // 游客
 }
 
-export enum userStatus {
-  Fail = 0, // 失效
-  Effective = 1, // 有效
-  Deleted = 2, // 删除
-}
-
-export enum tagStatus {
-  Fail = 0, // 失效
-  Effective = 1, // 有效
-  Deleted = 2, // 删除
-}
-
-export enum articleStatus {
+export enum status {
   Fail = 0, // 失效
   Effective = 1, // 有效
   Deleted = 2, // 删除

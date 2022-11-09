@@ -1,4 +1,4 @@
-import { tagStatus } from 'src/constants/user';
+import { status } from 'src/constants/user';
 import { Article } from 'src/modules/articles/entitles/article.entity';
 import { User } from 'src/modules/users/entities/user.entity';
 import {
@@ -22,10 +22,10 @@ export class Tag {
   color: string;
 
   @Column({
-    default: tagStatus.Effective,
+    default: status.Effective,
     comment: '状态：0-失效|1-有效|2-删除',
   })
-  status: number;
+  tag_status: number;
 
   @Column({ comment: '被引用次数', default: 0 })
   count: number;

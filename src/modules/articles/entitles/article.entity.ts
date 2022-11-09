@@ -1,4 +1,4 @@
-import { articleStatus } from 'src/constants/user';
+import { status } from 'src/constants/user';
 import { Tag } from 'src/modules/tags/entitles/tag.entity';
 import { User } from 'src/modules/users/entities/user.entity';
 import {
@@ -40,10 +40,10 @@ export class Article {
   tags: Tag[];
 
   @Column({
-    default: articleStatus.Effective,
+    default: status.Effective,
     comment: '状态：0-失效|1-有效|2-删除',
   })
-  status: number;
+  article_status: number;
 
   // user_id === Article.createBy
   @ManyToOne(() => User, (user) => user.articles)

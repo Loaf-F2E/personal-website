@@ -16,7 +16,7 @@ export class CreateArticleDto {
 
   @ApiProperty({ description: '文章状态' })
   @IsNumber()
-  readonly status: number;
+  readonly article_status: number;
 
   @ApiProperty({ description: '文章创建时间' })
   @IsDate()

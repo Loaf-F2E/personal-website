@@ -45,7 +45,7 @@ export class ArticlesService {
       message: '添加成功',
     };
   }
-
+  // TODO 未判断有没有被删除
   async findAll(id: number) {
     const all = await this.articleRepository
       .createQueryBuilder('article')
