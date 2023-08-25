@@ -1,17 +1,17 @@
 package main
 
 import (
-	"net/http"
-
-	"github.com/gin-gonic/gin"
+	"personal-website/core"
+	"personal-website/global"
+	"personal-website/initialize"
 )
 
 func main() {
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
-	r.Run()
+	global.VP = core.Viper()
+	global.DB = initialize.Gorm()
+	if global.DB != nil {
+		db, _ := global.DB.DB()
+		defer db.Close()
+	}
+	core.RunServer()
 }
