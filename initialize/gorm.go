@@ -1,8 +1,11 @@
 package initialize
 
 import (
+	"personal-website/initialize/internal"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 func Gorm() *gorm.DB {
@@ -26,6 +29,8 @@ func Gorm() *gorm.DB {
 
 func gormConfig() *gorm.Config {
 	config := &gorm.Config{DisableForeignKeyConstraintWhenMigrating: true, SkipDefaultTransaction: true}
+
+	config.Logger = internal.Default.LogMode(logger.Info)
 
 	return config
 }
