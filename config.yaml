@@ -1,0 +1,7 @@
+mysql:
+  user: root
+  host: 127.0.0.1
+  part: 33306
+  dbname: personal_website
+  password: 123456
+  

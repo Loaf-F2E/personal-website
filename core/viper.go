@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func Viper(path ...string) *viper.Viper {
+func Viper() *viper.Viper {
 	var config string = "config.yaml"
 	v := viper.New()
 	v.SetConfigFile(config)
