@@ -11,7 +11,8 @@ import (
 )
 
 func Gorm() *gorm.DB {
-	dsn := global.VP.Get("mysql.user").(string) + ":" + global.VP.Get("mysql.password").(string) + "@tcp(" + global.VP.Get("mysql.host").(string) + ":" + global.VP.Get("mysql.port").(string) + ")/" + global.VP.Get("mysql.dbname").(string) + "?charset=utf8mb4&parseTime=True&loc=Local"
+	m := global.CONFIG.Mysql
+	dsn := m.Dsn()
 	fmt.Println("dsn:", dsn)
 	mysqlConfig := mysql.Config{
 		// DSN:                       "root:123456@tcp(127.0.0.1:33306)/personal_website?charset=utf8mb4&parseTime=True&loc=Local",

@@ -15,8 +15,6 @@ var (
 	TokenInvalid     = errors.New("Couldn't handle this token:")
 )
 
-// var ExpiresTime int64 = 172800
-
 type JWT struct {
 	SigningKey []byte
 }
@@ -34,19 +32,17 @@ type BaseClaims struct {
 
 func NewJWT() *JWT {
 	return &JWT{
-		// TODO: config file
-		[]byte("12334jfjaghlajgljgjjg"),
+		[]byte(global.CONFIG.JWT.SigningKey),
 	}
 }
 
 func (j *JWT) CreateClaims(baseClaims BaseClaims) CustomClaims {
 	claims := CustomClaims{
 		BaseClaims: baseClaims,
-		// TODO: config file
-		BufferTime: 86400, // 缓冲时间1天
+		BufferTime: global.CONFIG.JWT.BufferTime, // 缓冲时间1天
 		StandardClaims: jwt.StandardClaims{
-			NotBefore: time.Now().Unix() - 1000,   // 签名生效时间
-			ExpiresAt: time.Now().Unix() + 172800, // 过期时间7天
+			NotBefore: time.Now().Unix() - 1000,                          // 签名生效时间
+			ExpiresAt: time.Now().Unix() + global.CONFIG.JWT.ExpiresTime, // 过期时间7天
 			Issuer:    "hs",
 		},
 	}

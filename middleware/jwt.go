@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"personal-website/global"
 	"personal-website/models/common/response"
 	"personal-website/utils"
 	"strconv"
@@ -8,8 +9,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 )
-
-const expiresTime int64 = 172800
 
 func JWTAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -32,7 +31,7 @@ func JWTAuth() gin.HandlerFunc {
 			return
 		}
 		if claims.ExpiresAt-time.Now().Unix() < claims.BufferTime {
-			claims.ExpiresAt = time.Now().Unix() + expiresTime
+			claims.ExpiresAt = time.Now().Unix() + global.CONFIG.JWT.ExpiresTime
 			newToken, _ := j.CreateTokenByOldToken(token, *claims)
 			newClaims, _ := j.ParseToken(newToken)
 			c.Header("new-token", newToken)

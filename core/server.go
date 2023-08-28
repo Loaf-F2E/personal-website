@@ -21,6 +21,7 @@ func initServer(address string, router *gin.Engine) server {
 }
 
 func RunServer() {
+	initialize.Redis()
 	Router := initialize.Routers()
 
 	s := initServer(":7777", Router)
