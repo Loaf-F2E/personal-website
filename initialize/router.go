@@ -2,6 +2,7 @@ package initialize
 
 import (
 	"personal-website/middleware"
+	"personal-website/router"
 
 	"github.com/gin-gonic/gin"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -19,6 +20,15 @@ func Routers() *gin.Engine {
 			c.JSON(200, "ok")
 		})
 	}
+	userRouter := router.RouterGroupApp.User
 	PrivateGroup.Use(middleware.JWTAuth())
+	// private
+	{
+		// userRouter.InitLoginRouter(PrivateGroup)
+	}
+	// public
+	{
+		userRouter.InitLoginRouter(PublicGroup)
+	}
 	return Router
 }
