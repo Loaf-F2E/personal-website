@@ -1,6 +1,7 @@
 package initialize
 
 import (
+	_ "personal-website/docs"
 	"personal-website/middleware"
 	"personal-website/router"
 
