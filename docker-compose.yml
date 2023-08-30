@@ -1,12 +1,9 @@
 version: '3'
-
 services:
-  db:
-    image: postgres
-    restart: always
+  mysql:
+    image: mysql:5.7
     ports:
-      - "5432:5432"
+      - 3305:3306
     environment:
-      POSTGRES_PASSWORD: 123456
-    volumes:
-      - /var/lib/docker/volumes/pgdata/_data:/var/lib/postgresql/data
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=personal_website

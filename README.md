@@ -2,40 +2,22 @@
 
 ## technology stack(技术栈)
 
-node: nest
-database: postgresql
+go + gin + mysql
 ## docker 
 
 docker-compose.yml  通过docker-compose创建数据库镜像，运行`docker-compose up -d`
 如果连接的是服务器上的数据库，则需要在服务器上创建数据库。命令可参考
 
-```sh
-
-# 数据卷可以在容器之间共享和重用， 默认会一直存在，即使容器被删除（docker volume inspect pgdata可查看数据卷的本地位置，
-# 验证持久数据目录） docker container 对于改动只是暂存的，所以如果我们的 container 挂掉了，那么我们数据库中存储的数据就全无了
-
-$ docker volume create pgdata
-
-$ docker volume inspect pgdata
-
-docker run --name postgres --restart always -e POSTGRES_USER='postgres' -e POSTGRES_PASSWORD='123456' -e ALLOW_IP_RANGE=0.0.0.0/0 -v pgdata:/var/lib/postgresql/data -p 5432:5432 -d postgres
-
-# -e ALLOW_IP_RANGE=0.0.0.0/0，这个表示允许所有ip访问，如果不加，则非本机 ip 访问不了
-# -e POSTGRES_USER=abcuser 用户名
-# -e POSTGRES_PASS=‘abc123’ 指定密码
+### redis
+```
+docker run --name redis -p 6379:6379 \
+-v /Users/hcm-b0361/redis/redis.conf:/etc/redis/redis.conf \
+-v /Users/hcm-b0361/redis/data:/data \
+-d --restart=always redis:7.0.8 redis-server /etc/redis/redis.conf \
+--appendonly yes \
+--requirepass "123456"
 ```
 
-## 全局变量 
-
-.env文件例子
-``` 
-DATABASE_HOST=localhost
-DATABASE_PORT=5432
-DATABASE_USER=postgres
-DATABASE_PASSWORD=123456
-DATABASE_NAME=personal_website
-JWT_SECRET=test
-```
 ## 功能
 
 ### 个人博客功能
