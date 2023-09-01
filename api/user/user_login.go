@@ -11,6 +11,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
+	"go.uber.org/zap"
 )
 
 type UserLoginApi struct{}
@@ -39,6 +40,7 @@ func (e *UserLoginApi) Login(c *gin.Context) {
 
 	token, exp, err := e.tokenNext(c, usr)
 	if err != nil {
+		global.LOG.Error(("登录失败"))
 		response.FailWithMessage("登录失败", c)
 	} else {
 		response.OkWithDetailed(response.LoginResponse{
@@ -62,20 +64,28 @@ func (b *UserLoginApi) tokenNext(c *gin.Context, usr user.User) (tk string, exp 
 	})
 	token, err := j.CreateToken(claims)
 	if err != nil {
-		fmt.Println("获取token失败")
+		global.LOG.Error("获取token失败", zap.Any("err", err))
 		return "", 0, err
 	}
+	fmt.Println("3")
+	fmt.Printf("%+v\n", usr)
 	if _, err := jwtService.GetRedisJWT(strconv.Itoa(int(usr.ID))); err == redis.Nil {
+		fmt.Println("4")
 		if err := jwtService.SetRedisJWT(token, strconv.Itoa(int(usr.ID))); err != nil {
+			fmt.Println("5")
 			return "", 0, err
 		}
+		fmt.Println("6")
 		return token, claims.StandardClaims.ExpiresAt * 1000, nil
 	} else if err != nil {
+		fmt.Println("7")
 		return "", 0, err
 	} else {
+		fmt.Println("8")
 		if err := jwtService.SetRedisJWT(token, strconv.Itoa(int(usr.ID))); err != nil {
 			return "", 0, err
 		}
+		fmt.Println("9")
 		return token, claims.StandardClaims.ExpiresAt * 1000, nil
 	}
 }

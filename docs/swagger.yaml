@@ -1,3 +1,4 @@
+basePath: /
 definitions:
   request.LoginForm:
     properties:
@@ -10,6 +11,9 @@ definitions:
     type: object
 info:
   contact: {}
+  description: personal-website API
+  title: personal-website API
+  version: 1.0.0
 paths:
   /user/login:
     post:
@@ -34,4 +38,9 @@ paths:
       summary: 静默登陆
       tags:
       - merchant
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: token
+    type: apiKey
 swagger: "2.0"

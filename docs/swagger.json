@@ -1,8 +1,12 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "personal-website API",
+        "title": "personal-website API",
+        "contact": {},
+        "version": "1.0.0"
     },
+    "basePath": "/",
     "paths": {
         "/user/login": {
             "post": {
@@ -57,6 +61,13 @@
                     "type": "string"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "token",
+            "in": "header"
         }
     }
 }
