@@ -1,10 +1,6 @@
 package core
 
 import (
-	"fmt"
-	"io/ioutil"
-	"os"
-	"personal-website/global"
 	"personal-website/initialize"
 	"time"
 
@@ -25,15 +21,15 @@ func initServer(address string, router *gin.Engine) server {
 }
 
 func RunServer() {
-	absPath, _ := os.Getwd()
-	sql, err := ioutil.ReadFile(absPath + "/example.sql")
-	fmt.Println("sql:", string(sql))
-	if err != nil {
-		fmt.Println("ReadFile sql执行错误:", err)
-	} else {
-		global.DB.Exec(string(sql))
-		fmt.Println("sql执行了")
-	}
+	// absPath, _ := os.Getwd()
+	// sql, err := ioutil.ReadFile(absPath + "/example.sql")
+	// fmt.Println("sql:", string(sql))
+	// if err != nil {
+	// 	fmt.Println("ReadFile sql执行错误:", err)
+	// } else {
+	// 	global.DB.Exec(string(sql))
+	// 	fmt.Println("sql执行了")
+	// }
 
 	initialize.Redis()
 	Router := initialize.Routers()

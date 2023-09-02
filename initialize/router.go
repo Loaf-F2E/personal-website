@@ -25,11 +25,11 @@ func Routers() *gin.Engine {
 	PrivateGroup.Use(middleware.JWTAuth())
 	// private
 	{
-		// userRouter.InitLoginRouter(PrivateGroup)
+		// userRouter.InitUserRouter(PrivateGroup)
 	}
 	// public
 	{
-		userRouter.InitLoginRouter(PublicGroup)
+		userRouter.InitUserRouter(PublicGroup)
 	}
 	return Router
 }

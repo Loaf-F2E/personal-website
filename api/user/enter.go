@@ -3,7 +3,7 @@ package user
 import "personal-website/service"
 
 type ApiGroup struct {
-	UserLoginApi
+	UserApi
 }
 
 var jwtService = service.ServiceGroupApp.SystemServiceGroup.JwtService
