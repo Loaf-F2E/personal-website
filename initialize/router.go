@@ -25,7 +25,7 @@ func Routers() *gin.Engine {
 	PrivateGroup.Use(middleware.JWTAuth())
 	// private
 	{
-		// userRouter.InitUserRouter(PrivateGroup)
+		userRouter.InitUserAuthRouter(PrivateGroup)
 	}
 	// public
 	{

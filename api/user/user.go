@@ -69,21 +69,21 @@ func (e *UserApi) Login(c *gin.Context) {
 		response.ParamsError(err.Error(), c)
 		return
 	}
-	usr := user.User{}
-	// if global.DB.Where("email", loginForm.Email).Limit(1).Find(&usr).RowsAffected == 0 {
-	// 	usr.Email = loginForm.Email
-	// 	usr.Password = loginForm.Password
-	// 	global.DB.Create(&usr)
-	// }
 
-	token, exp, err := e.tokenNext(c, usr)
+	var userSwitch user.User
+	res := global.DB.Where("email", loginForm.Email).Find(&userSwitch)
+	if res.RowsAffected == 0 {
+		response.FailWithMessage("该用户不存在", c)
+		return
+	}
+	token, exp, err := e.tokenNext(c, userSwitch)
 	if err != nil {
 		global.LOG.Error(("登录失败"))
 		response.FailWithMessage("登录失败", c)
 	} else {
 		response.OkWithDetailed(response.LoginResponse{
 			Token:     token,
-			UserId:    int(usr.ID),
+			UserId:    int(userSwitch.ID),
 			ExpiresAt: exp,
 		}, "登陆成功", c)
 	}

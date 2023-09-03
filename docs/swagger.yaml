@@ -32,6 +32,23 @@ info:
   title: personal-website API
   version: 1.0.0
 paths:
+  /user/info:
+    get:
+      consumes:
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"data":{"avatar":"", "email":"", "nickname":"",
+            "id":"1"},"msg":"操作成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 获取玩家信息
+      tags:
+      - user
   /user/login:
     post:
       consumes:
