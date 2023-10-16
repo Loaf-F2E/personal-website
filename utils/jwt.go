@@ -50,7 +50,7 @@ func (j *JWT) CreateClaims(baseClaims BaseClaims) CustomClaims {
 }
 
 func (j *JWT) CreateToken(claims CustomClaims) (string, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodES256, claims)
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(j.SigningKey)
 }
 

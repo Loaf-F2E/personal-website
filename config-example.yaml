@@ -1,0 +1,16 @@
+mysql:
+  user: root
+  host: localhost
+  part: 3306
+  dbname: personal_website
+  password: z
+  config: charset=utf8mb4&parseTime=True&loc=Local
+jwt:
+  buffer-time: 86400
+  expires-time: 172800
+  signing-key: 12334-jfjaghl-ajgl-jgjjg
+  issuer: hs
+redis:
+  db: 0
+  addr: localhost:6379
+  password: 123456

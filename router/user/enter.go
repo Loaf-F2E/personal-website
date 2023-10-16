@@ -1,5 +1,6 @@
 package user
 
 type RouterGroup struct {
-	AuthRouter
+	UserRouter
+	UserAuthRouter
 }

@@ -23,6 +23,33 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/user/info": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "获取玩家信息",
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0,\"data\":{\"avatar\":\"\", \"email\":\"\", \"nickname\":\"\", \"id\":\"1\"},\"msg\":\"操作成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/user/login": {
             "post": {
                 "security": [
@@ -37,9 +64,9 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "merchant"
+                    "user"
                 ],
-                "summary": "静默登陆",
+                "summary": "登陆",
                 "parameters": [
                     {
                         "description": "账号",
@@ -60,13 +87,52 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/user/register": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "注册",
+                "parameters": [
+                    {
+                        "description": "账号",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.RegisterForm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{\"token\":\"xxxxxxxxx\"},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
         "request.LoginForm": {
             "type": "object",
             "required": [
-                "email"
+                "email",
+                "password"
             ],
             "properties": {
                 "email": {
@@ -76,6 +142,37 @@ var doc = `{
                     "type": "string"
                 }
             }
+        },
+        "request.RegisterForm": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "integer"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "token",
+            "in": "header"
         }
     }
 }`
@@ -91,12 +188,12 @@ type swaggerInfo struct {
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
-	Version:     "",
+	Version:     "1.0.0",
 	Host:        "",
-	BasePath:    "",
+	BasePath:    "/",
 	Schemes:     []string{},
-	Title:       "",
-	Description: "",
+	Title:       "personal-website API",
+	Description: "personal-website API",
 }
 
 type s struct{}

@@ -12,9 +12,9 @@ func Redis() {
 	redisConfig := global.CONFIG.Redis
 	fmt.Printf("redisConfig:\nAddr: %v\nDb: %v\n", redisConfig.Addr, redisConfig.DB)
 	client := redis.NewClient(&redis.Options{
-		Addr: redisConfig.Addr,
-		// Password: redisConfig.Password,
-		DB: redisConfig.DB,
+		Addr:     redisConfig.Addr,
+		Password: redisConfig.Password,
+		DB:       redisConfig.DB,
 	})
 	pong, err := client.Ping(context.Background()).Result()
 	if err != nil {

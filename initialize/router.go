@@ -1,6 +1,7 @@
 package initialize
 
 import (
+	_ "personal-website/docs"
 	"personal-website/middleware"
 	"personal-website/router"
 
@@ -24,11 +25,11 @@ func Routers() *gin.Engine {
 	PrivateGroup.Use(middleware.JWTAuth())
 	// private
 	{
-		// userRouter.InitLoginRouter(PrivateGroup)
+		userRouter.InitUserAuthRouter(PrivateGroup)
 	}
 	// public
 	{
-		userRouter.InitLoginRouter(PublicGroup)
+		userRouter.InitUserRouter(PublicGroup)
 	}
 	return Router
 }
