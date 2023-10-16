@@ -105,25 +105,18 @@ func (b *UserApi) tokenNext(c *gin.Context, usr user.User) (tk string, exp int64
 		global.LOG.Error("获取token失败", zap.Any("err", err))
 		return "", 0, err
 	}
-	fmt.Println("3")
 	fmt.Printf("%+v\n", usr)
 	if _, err := jwtService.GetRedisJWT(strconv.Itoa(int(usr.ID))); err == redis.Nil {
-		fmt.Println("4")
 		if err := jwtService.SetRedisJWT(token, strconv.Itoa(int(usr.ID))); err != nil {
-			fmt.Println("5")
 			return "", 0, err
 		}
-		fmt.Println("6")
 		return token, claims.StandardClaims.ExpiresAt * 1000, nil
 	} else if err != nil {
-		fmt.Println("7")
 		return "", 0, err
 	} else {
-		fmt.Println("8")
 		if err := jwtService.SetRedisJWT(token, strconv.Itoa(int(usr.ID))); err != nil {
 			return "", 0, err
 		}
-		fmt.Println("9")
 		return token, claims.StandardClaims.ExpiresAt * 1000, nil
 	}
 }
